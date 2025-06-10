@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto px-10 mt-24">
+      <div className="container w-full mx-auto px-10 mt-24">
         <EventDashboard />
       </div>
     </div>
