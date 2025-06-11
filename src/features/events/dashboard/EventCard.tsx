@@ -12,7 +12,7 @@ export default function EventCard({event}: Props) {
         <div className="card card-border bg-base-100 w-full">
             <div className="card-body">
                 <div className="flex gap-3 items-center">
-                    <figure className="card-figure w-14 rounded-2xl">
+                    <figure className="card-figure w-14 rounded-full">
                         <img src={host?.photoURL || "./user.png"} alt="user avatar" className="src" />
                     </figure>
                     <div>

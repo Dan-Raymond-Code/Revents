@@ -10,7 +10,7 @@ export default function EventAttendees({attendees}: Props) {
     <div className="avatar-group -space-x-5">
         {attendees.map((attendee) => (  
           <div className="avatar" key={attendee.id}>
-            <div className="w-12">
+            <div className="w-10 rounded-full">
                 <img src={attendee.photoURL || './user.png'} />
             </div>
           </div>
