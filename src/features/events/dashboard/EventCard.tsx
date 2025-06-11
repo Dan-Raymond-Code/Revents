@@ -21,7 +21,7 @@ export default function EventCard({event}: Props) {
                     </div>
                 </div>
                 <div className="bg-base-200 -mx-6 my-3 px-4 py-2 border-y border-neutral/20">
-                    <EventAttendees attendees={event.attendees} />
+                    <EventAttendees attendees={event.attendees}/>
                 </div>
                
                 <div className="card-actions flex">

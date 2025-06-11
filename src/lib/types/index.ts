@@ -16,8 +16,8 @@ export type AppEvent = {
     latitude: number;
     longitude: number;
     hostUid: string;
-    attendees?: Attendee[];
-    attendeeIds?: string[];
+    attendees: Attendee[];
+    attendeeIds: string[];
 }
 
 export type Attendee = {

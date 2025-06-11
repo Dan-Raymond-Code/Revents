@@ -2,7 +2,13 @@ import { events } from "../../../lib/data/sampleData";
 import EventForm from "../form/EventForm";
 import EventCard from "./EventCard";
 
-export default function EventDashboard() {
+type Props = {
+  formOpen: boolean;
+  setFormOpen: (open: boolean) => void;
+}
+
+export default function EventDashboard({ formOpen, setFormOpen }: Props) {
+  // This is a placeholder for the actual event data fetching logic
   return (
     <div className="flex flex-row w-full gap-6">
       <div className="w-3/5 flex flex-col gap-4">
@@ -12,7 +18,9 @@ export default function EventDashboard() {
       }
       </div>
       <div className="w-2/5">
-        <EventForm />
+      {formOpen && (
+        <EventForm setFormOpen={() => setFormOpen()} />
+      )}
       </div>
     </div>
   )
