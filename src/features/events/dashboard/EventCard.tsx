@@ -3,9 +3,10 @@ import EventAttendees from "./EventAttendees";
 
 type Props = {
     event: AppEvent;
+    selectEvent: (event: AppEvent) => void;
 }
 
-export default function EventCard({event}: Props) {
+export default function EventCard({event, selectEvent}: Props) {
     const host = event.attendees?.find(attendee => attendee.isHost);
     
     return (
@@ -28,7 +29,7 @@ export default function EventCard({event}: Props) {
                     <div className="flex flex-1">
                         Description
                     </div>
-                    <button className="btn btn-primary">View</button>
+                    <button onClick={() => selectEvent(event)} className="btn btn-primary">View</button>
                 </div>
             </div>
         </div>

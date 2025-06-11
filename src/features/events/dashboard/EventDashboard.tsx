@@ -12,11 +12,17 @@ type Props = {
 
 export default function EventDashboard({ formOpen, setFormOpen }: Props) {
   const [appEvents, setAppEvents] = useState<AppEvent[]>([]);
-
+  const [selectedEvent, setSelectedEvent] = useState<AppEvent | null>(null);  
+  
   const handleCreateEvent = (event: AppEvent) => {
     setAppEvents((prevEvents) => [...prevEvents, event]);
   };
 
+  const handleSelectEvent = (event: AppEvent) => {
+    setSelectedEvent(event);
+    setFormOpen(true); // Open the form when an event is selected
+  };
+  
   useEffect(() => {
      setAppEvents(events);  
 
@@ -37,7 +43,7 @@ export default function EventDashboard({ formOpen, setFormOpen }: Props) {
         >
         <div className="flex flex-col gap-4">
           {appEvents.map((event) => (
-              <EventCard key={event.id} event={event} />
+              <EventCard selectEvent={handleSelectEvent} key={event.id} event={event} />
             ))
           }
           </div>  
@@ -53,7 +59,7 @@ export default function EventDashboard({ formOpen, setFormOpen }: Props) {
                     exit={{ opacity: 0, x: 200 }}
                     transition={{ duration: 0.3, type: "easeInOut" }}
                   >
-          <EventForm setFormOpen={() => setFormOpen(false)} createEvent={handleCreateEvent} />
+          <EventForm setFormOpen={() => setFormOpen(false)} createEvent={handleCreateEvent} selectedEvent={selectedEvent} />
           </motion.div> 
         )}
         </AnimatePresence>
