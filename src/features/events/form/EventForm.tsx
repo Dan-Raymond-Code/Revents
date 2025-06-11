@@ -1,8 +1,12 @@
+import { users } from "../../../lib/data/sampleData";
+import type { AppEvent } from "../../../lib/types";
+
 type Props = {
   setFormOpen: (open: boolean) => void;
+  createEvent: (event: AppEvent) => void;
 }
 
-export default function EventForm({setFormOpen}: Props) {
+export default function EventForm({setFormOpen, createEvent}: Props) {
   // const onSubmit = (formData: FormData) => {
   //   console.log(formData);
 
@@ -13,9 +17,21 @@ export default function EventForm({setFormOpen}: Props) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    const data = Object.fromEntries(formData.entries()) as unknown as AppEvent;
     console.log(data);
-    // Here you would typically send the data to your backend API    
+    createEvent({
+        ...data, // Spread the data to match AppEvent type
+        id: crypto.randomUUID(), 
+        hostUid: users[0].uid,
+        attendees: [{
+          id: users[0].uid,
+          displayName: users[0].displayName,
+          photoURL: users[0].photoURL,
+          isHost: true,  
+        }], 
+      }); 
+    // Reset the form fields
+    e.currentTarget.reset();    
     setFormOpen(false); // Close the form after submission      
   }
 
