@@ -3,10 +3,10 @@ import EventAttendees from "./EventAttendees";
 
 type Props = {
     event: AppEvent;
-    selectEvent: (event: AppEvent) => void;
+    formToggle: (event: AppEvent) => void;
 }
 
-export default function EventCard({event, selectEvent}: Props) {
+export default function EventCard({event, formToggle}: Props) {
     const host = event.attendees?.find(attendee => attendee.isHost);
     
     return (
@@ -29,7 +29,7 @@ export default function EventCard({event, selectEvent}: Props) {
                     <div className="flex flex-1">
                         Description
                     </div>
-                    <button onClick={() => selectEvent(event)} className="btn btn-primary">View</button>
+                    <button onClick={() => formToggle(event)} className="btn btn-primary">View</button>
                 </div>
             </div>
         </div>

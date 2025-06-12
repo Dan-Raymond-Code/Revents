@@ -8,21 +8,18 @@ import { AnimatePresence, motion } from "motion/react";
 type Props = {
   formOpen: boolean;
   setFormOpen: (open: boolean) => void;
+  formToggle: (event: AppEvent | null) => void;
+  selectedEvent: AppEvent | null;
 }
 
-export default function EventDashboard({ formOpen, setFormOpen }: Props) {
+export default function EventDashboard({ formOpen, setFormOpen, formToggle, selectedEvent }: Props) {
   const [appEvents, setAppEvents] = useState<AppEvent[]>([]);
-  const [selectedEvent, setSelectedEvent] = useState<AppEvent | null>(null);  
+  
   
   const handleCreateEvent = (event: AppEvent) => {
     setAppEvents((prevEvents) => [...prevEvents, event]);
   };
-
-  const handleSelectEvent = (event: AppEvent) => {
-    setSelectedEvent(event);
-    setFormOpen(true); // Open the form when an event is selected
-  };
-  
+ 
   useEffect(() => {
      setAppEvents(events);  
 
@@ -43,7 +40,7 @@ export default function EventDashboard({ formOpen, setFormOpen }: Props) {
         >
         <div className="flex flex-col gap-4">
           {appEvents.map((event) => (
-              <EventCard selectEvent={handleSelectEvent} key={event.id} event={event} />
+              <EventCard formToggle={formToggle} key={event.id} event={event} />
             ))
           }
           </div>  
@@ -59,7 +56,7 @@ export default function EventDashboard({ formOpen, setFormOpen }: Props) {
                     exit={{ opacity: 0, x: 200 }}
                     transition={{ duration: 0.3, type: "easeInOut" }}
                   >
-          <EventForm setFormOpen={() => setFormOpen(false)} createEvent={handleCreateEvent} selectedEvent={selectedEvent} />
+          <EventForm key={selectedEvent?.id || "new"} setFormOpen={() => setFormOpen(false)} createEvent={handleCreateEvent} selectedEvent={selectedEvent} />
           </motion.div> 
         )}
         </AnimatePresence>

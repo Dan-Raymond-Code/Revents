@@ -41,13 +41,13 @@ export default function EventForm({setFormOpen, createEvent, selectedEvent}: Pro
           isHost: true,  
         }], 
       }); 
-      
+
     setFormOpen(false); // Close the form after submission      
   }
 
   return (  
     <div className="card bg-base-100 p-4 flex flex-col gap-3 w-full">
-        <h2 className="text-2xl font-semibold text-center text-primary">Create New Event</h2>
+        <h2 className="text-2xl font-semibold text-center text-primary">{selectedEvent ? 'Edit Event' : 'Create Event'}</h2>
         <form onSubmit={handleSubmit} method="post" className="flex flex-col gap-3 w-full">
         <input type="text" defaultValue={initialValues.title} name='title' className="input input-lg w-full" placeholder="Event title" />
         <input type="text" defaultValue={initialValues.category} name='category' className="input input-lg w-full" placeholder="Category" />            
