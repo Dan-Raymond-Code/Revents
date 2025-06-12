@@ -4,9 +4,10 @@ import EventAttendees from "./EventAttendees";
 type Props = {
     event: AppEvent;
     formToggle: (event: AppEvent) => void;
+    deleteEvent: (eventId: string) => void;
 }
 
-export default function EventCard({event, formToggle}: Props) {
+export default function EventCard({event, formToggle, deleteEvent}: Props) {
     const host = event.attendees?.find(attendee => attendee.isHost);
     
     return (
@@ -29,7 +30,10 @@ export default function EventCard({event, formToggle}: Props) {
                     <div className="flex flex-1">
                         {event.description}
                     </div>
-                    <button onClick={() => formToggle(event)} className="btn btn-primary">View</button>
+                    <div className="flex gap-3">
+                        <button onClick={() => deleteEvent(event.id)} className="btn btn-error ml-auto">Delete</button>
+                        <button onClick={() => formToggle(event)} className="btn btn-primary">View</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -26,6 +26,12 @@ export default function EventDashboard({ formOpen, setFormOpen, formToggle, sele
       )
     );
   }
+
+  const handleDeleteEvent = (eventId: string) => {
+    if (confirm("Are you sure you want to delete this event?")) {
+      setAppEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+    }
+  };
   
   useEffect(() => {
      setAppEvents(events);  
@@ -47,7 +53,12 @@ export default function EventDashboard({ formOpen, setFormOpen, formToggle, sele
         >
         <div className="flex flex-col gap-4">
           {appEvents.map((event) => (
-              <EventCard formToggle={formToggle} key={event.id} event={event} />
+              <EventCard 
+              formToggle={formToggle} 
+              deleteEvent={handleDeleteEvent} 
+              key={event.id} 
+              event={event} 
+              />
             ))
           }
           </div>  
