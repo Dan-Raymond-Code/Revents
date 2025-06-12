@@ -27,7 +27,7 @@ export default function EventCard({event, formToggle}: Props) {
                
                 <div className="card-actions flex">
                     <div className="flex flex-1">
-                        Description
+                        {event.description}
                     </div>
                     <button onClick={() => formToggle(event)} className="btn btn-primary">View</button>
                 </div>

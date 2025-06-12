@@ -14,12 +14,19 @@ type Props = {
 
 export default function EventDashboard({ formOpen, setFormOpen, formToggle, selectedEvent }: Props) {
   const [appEvents, setAppEvents] = useState<AppEvent[]>([]);
-  
-  
+    
   const handleCreateEvent = (event: AppEvent) => {
     setAppEvents((prevEvents) => [...prevEvents, event]);
   };
  
+  const handleUpdateEvent = (updatedEvent: AppEvent) => {
+    setAppEvents((prevEvents) =>
+      prevEvents.map((e) =>
+        e.id === updatedEvent.id ? updatedEvent : e
+      )
+    );
+  }
+  
   useEffect(() => {
      setAppEvents(events);  
 
@@ -56,7 +63,13 @@ export default function EventDashboard({ formOpen, setFormOpen, formToggle, sele
                     exit={{ opacity: 0, x: 200 }}
                     transition={{ duration: 0.3, type: "easeInOut" }}
                   >
-          <EventForm key={selectedEvent?.id || "new"} setFormOpen={() => setFormOpen(false)} createEvent={handleCreateEvent} selectedEvent={selectedEvent} />
+          <EventForm 
+          key={selectedEvent?.id || "new"} 
+          setFormOpen={() => setFormOpen(false)} 
+          createEvent={handleCreateEvent} 
+          selectedEvent={selectedEvent} 
+          updateEvent={handleUpdateEvent}
+          />
           </motion.div> 
         )}
         </AnimatePresence>
