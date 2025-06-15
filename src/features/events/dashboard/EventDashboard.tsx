@@ -4,6 +4,7 @@ import EventForm from "../form/EventForm";
 import EventCard from "./EventCard";
 import type { AppEvent } from "../../../lib/types";
 import { AnimatePresence, motion } from "motion/react";
+import Counter from "../../counter/Counter";
 
 type Props = {
   formOpen: boolean;
@@ -66,22 +67,32 @@ export default function EventDashboard({ formOpen, setFormOpen, formToggle, sele
         </AnimatePresence>
       </div>
       <div className="w-2/5 overflow-hidden">
-        <AnimatePresence>
-          {formOpen && (
+        <AnimatePresence mode="wait">
+          {formOpen ? (
                     <motion.div
                     initial={{ opacity: 0, x: 200 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 200 }}
                     transition={{ duration: 0.3, type: "easeInOut" }}
                   >
-          <EventForm 
-          key={selectedEvent?.id || "new"} 
-          setFormOpen={() => setFormOpen(false)} 
-          createEvent={handleCreateEvent} 
-          selectedEvent={selectedEvent} 
-          updateEvent={handleUpdateEvent}
-          />
-          </motion.div> 
+                      <EventForm 
+                      key={selectedEvent?.id || "new"} 
+                      setFormOpen={() => setFormOpen(false)} 
+                      createEvent={handleCreateEvent} 
+                      selectedEvent={selectedEvent} 
+                      updateEvent={handleUpdateEvent}
+                      />
+                    </motion.div> 
+        ) : (
+            <motion.div
+              key="counter"
+              initial={{ opacity: 0, x: 200 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 200 }}
+              transition={{ duration: 0.3, type: "easeInOut" }}
+            >
+              <Counter />
+            </motion.div>
         )}
         </AnimatePresence>
       </div>
