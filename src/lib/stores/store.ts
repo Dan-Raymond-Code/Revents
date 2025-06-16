@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux';
 import { counterSlice } from '../../features/counter/counterSlice';
+import { eventSlice } from '../../features/events/eventSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterSlice.reducer,
+    event: eventSlice.reducer,
   },
 })
 

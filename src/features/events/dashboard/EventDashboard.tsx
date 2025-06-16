@@ -5,6 +5,8 @@ import EventCard from "./EventCard";
 import type { AppEvent } from "../../../lib/types";
 import { AnimatePresence, motion } from "motion/react";
 import Counter from "../../counter/Counter";
+import { setEvents } from "../eventSlice";
+import { useAppDispatch, useAppSelector } from "../../../lib/stores/store";
 
 type Props = {
   formOpen: boolean;
@@ -14,7 +16,10 @@ type Props = {
 }
 
 export default function EventDashboard({ formOpen, setFormOpen, formToggle, selectedEvent }: Props) {
-  const [appEvents, setAppEvents] = useState<AppEvent[]>([]);
+  const dispatch = useAppDispatch();
+  const appEvents = useAppSelector((state) => state.event.events);
+  
+  const [, setAppEvents] = useState<AppEvent[]>([]);
     
   const handleCreateEvent = (event: AppEvent) => {
     setAppEvents((prevEvents) => [...prevEvents, event]);
@@ -35,12 +40,8 @@ export default function EventDashboard({ formOpen, setFormOpen, formToggle, sele
   };
   
   useEffect(() => {
-     setAppEvents(events);  
-
-     return () => {
-       setAppEvents([]); // Cleanup function to reset events on unmount
-     }
-  }, []);  
+     dispatch(setEvents(events));
+  }, [dispatch]);  
 
   return (
     <div className="flex flex-row w-full gap-6">
