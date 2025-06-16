@@ -1,15 +1,18 @@
 import { users } from "../../../lib/data/sampleData";
+import { useAppDispatch } from "../../../lib/stores/store";
 import type { AppEvent } from "../../../lib/types";
+import { eventSlice } from "../eventSlice";
 
 type Props = {
   setFormOpen: (open: boolean) => void;
-  createEvent: (event: AppEvent) => void;
   selectedEvent: AppEvent | null;
-  updateEvent: (event: AppEvent) => void;
 }
 
-export default function EventForm({setFormOpen, createEvent, selectedEvent, updateEvent}: Props) {
+export default function EventForm({setFormOpen, selectedEvent}: Props) {
 
+  const dispatch = useAppDispatch();
+  const { createEvent, updateEvent } = eventSlice.actions;
+  
   const initialValues = selectedEvent ?? {
     title: "",
     category: "",
@@ -33,13 +36,13 @@ export default function EventForm({setFormOpen, createEvent, selectedEvent, upda
 
     if (selectedEvent) {
       // If an event is selected, update it
-      updateEvent({
+      dispatch(updateEvent({
         ...selectedEvent,
         ...data
-      });
+      }));
     }
     else {
-      createEvent({
+      dispatch(createEvent({
           ...data, // Spread the data to match AppEvent type
           id: crypto.randomUUID(), 
           hostUid: users[0].uid,
@@ -49,7 +52,7 @@ export default function EventForm({setFormOpen, createEvent, selectedEvent, upda
             photoURL: users[0].photoURL,
             isHost: true,  
           }], 
-        }); 
+        })); 
     }
 
     setFormOpen(false); // Close the form after submission      
