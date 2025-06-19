@@ -1,16 +1,13 @@
 import { users } from "../../../lib/data/sampleData";
-import { useAppDispatch } from "../../../lib/stores/store";
+import { useAppDispatch, useAppSelector } from "../../../lib/stores/store";
 import type { AppEvent } from "../../../lib/types";
-import { eventSlice } from "../eventSlice";
+import { closeForm, eventSlice } from "../eventSlice";
 
-type Props = {
-  setFormOpen: (open: boolean) => void;
-  selectedEvent: AppEvent | null;
-}
-
-export default function EventForm({setFormOpen, selectedEvent}: Props) {
+export default function EventForm() {
 
   const dispatch = useAppDispatch();
+  const selectedEvent = useAppSelector((state) => state.event.selectedEvent);
+
   const { createEvent, updateEvent } = eventSlice.actions;
   
   const initialValues = selectedEvent ?? {
@@ -55,7 +52,7 @@ export default function EventForm({setFormOpen, selectedEvent}: Props) {
         })); 
     }
 
-    setFormOpen(false); // Close the form after submission      
+    dispatch(closeForm()); // Close the form after submission      
     return;
   }
 
@@ -70,7 +67,7 @@ export default function EventForm({setFormOpen, selectedEvent}: Props) {
         <input type="text" defaultValue={initialValues.city} name='city' className="input input-lg w-full" placeholder="City" />
         <input type="text" defaultValue={initialValues.venue} name='venue' className="input input-lg w-full" placeholder="Venue" />
               <div className="flex justify-end w-full gap-3">
-                <a onClick={() => setFormOpen(false)} type="button" className="btn btn-neutral">Cancel</a>
+                <a onClick={() => dispatch(closeForm())} type="button" className="btn btn-neutral">Cancel</a>
                 <button type="submit" className="btn btn-primary">Submit</button> 
               </div>
         </form>

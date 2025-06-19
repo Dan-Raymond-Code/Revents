@@ -2,45 +2,22 @@ import { useEffect } from "react";
 import { events } from "../../../lib/data/sampleData";
 import EventForm from "../form/EventForm";
 import EventCard from "./EventCard";
-import type { AppEvent } from "../../../lib/types";
 import { AnimatePresence, motion } from "motion/react";
 import Counter from "../../counter/Counter";
 import { setEvents } from "../eventSlice";
 import { useAppDispatch, useAppSelector } from "../../../lib/stores/store";
 
-type Props = {
-  formOpen: boolean;
-  setFormOpen: (open: boolean) => void;
-  formToggle: (event: AppEvent | null) => void;
-  selectedEvent: AppEvent | null;
-}
-
-export default function EventDashboard({ formOpen, setFormOpen, formToggle, selectedEvent }: Props) {
+export default function EventDashboard() {
   const dispatch = useAppDispatch();
-  const appEvents = useAppSelector((state) => state.event.events);
-  
-  //const [, setAppEvents] = useState<AppEvent[]>([]);
-    
-  // const handleCreateEvent = (event: AppEvent) => {
-  //   setAppEvents((prevEvents) => [...prevEvents, event]);
-  // };
- 
-  // const handleUpdateEvent = (updatedEvent: AppEvent) => {
-  //   setAppEvents((prevEvents) =>
-  //     prevEvents.map((e) =>
-  //       e.id === updatedEvent.id ? updatedEvent : e
-  //     )
-  //   );
-  // }
-
-  // const handleDeleteEvent = (eventId: string) => {
-  //   if (confirm("Are you sure you want to delete this event?")) {
-  //     setAppEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
-  //   }
-  // };
+  const {events: appEvents, selectedEvent, formOpen} = useAppSelector((state) => state.event);
   
   useEffect(() => {
      dispatch(setEvents(events));
+
+     return () => {
+      dispatch(setEvents([])); // Clear events on unmount
+     }
+
   }, [dispatch]);  
 
   return (
@@ -56,7 +33,6 @@ export default function EventDashboard({ formOpen, setFormOpen, formToggle, sele
         <div className="flex flex-col gap-4">
           {appEvents.map((event) => (
               <EventCard 
-              formToggle={formToggle} 
               key={event.id} 
               event={event} 
               />
@@ -77,8 +53,6 @@ export default function EventDashboard({ formOpen, setFormOpen, formToggle, sele
                   >
                       <EventForm 
                       key={selectedEvent?.id || "new"} 
-                      setFormOpen={() => setFormOpen(false)} 
-                      selectedEvent={selectedEvent} 
                       />
                     </motion.div> 
         ) : (

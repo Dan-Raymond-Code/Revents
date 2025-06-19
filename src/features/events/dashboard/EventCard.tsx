@@ -1,15 +1,14 @@
 import { useAppDispatch } from "../../../lib/stores/store";
 import type { AppEvent } from "../../../lib/types";
 import EventAttendees from "./EventAttendees";
-import { deleteEvent } from "../eventSlice";
+import { deleteEvent, toggleForm } from "../eventSlice";
 
 type Props = {
     event: AppEvent;
-    formToggle: (event: AppEvent) => void;
 }
 
-export default function EventCard({event, formToggle}: Props) {
-    const host = event.attendees?.find(attendee => attendee.isHost);
+export default function EventCard({event}: Props) {
+    const host = event.attendees?.find(x => x.id === event.hostUid);
     const dispatch = useAppDispatch();
     
     return (
@@ -34,7 +33,7 @@ export default function EventCard({event, formToggle}: Props) {
                     </div>
                     <div className="flex gap-3">
                         <button onClick={() => dispatch(deleteEvent(event.id))} className="btn btn-error ml-auto">Delete</button>
-                        <button onClick={() => formToggle(event)} className="btn btn-primary">View</button>
+                        <button onClick={() => dispatch(toggleForm(event))} className="btn btn-primary">View</button>
                     </div>
                 </div>
             </div>
