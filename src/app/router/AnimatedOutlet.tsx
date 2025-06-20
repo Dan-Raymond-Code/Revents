@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { cloneElement } from "react";
-import { Outlet, useLocation, useOutlet } from "react-router";
+import { useLocation, useOutlet } from "react-router";
 
 export default function AnimatedOutlet() {
     const location = useLocation();
