@@ -1,6 +1,9 @@
 import { NavLink } from "react-router";
+import UserMenu from "./UserMenu";
 
 export default function Navbar() {
+    const loggedIn = true;
+
     return (
         <header className="p-3 w-full fixed top-0 z-50 bg-gradient-to-r from-primary to-black">
             <div className="flex align-middle items-center px-10 mx-auto gap-6 cursor-pointer">
@@ -14,8 +17,14 @@ export default function Navbar() {
                 </nav>
 
                 <div className="flex align-middle ml-auto gap-3">
-                    <button className="btn">Login</button>
-                    <button className="btn">Register</button>
+                    {loggedIn ? (
+                        <UserMenu />
+                    ) : (
+                        <>
+                            <button className="btn">Login</button>
+                            <button className="btn">Register</button>
+                        </>
+                    )}
                 </div>
             </div>
         </header>
