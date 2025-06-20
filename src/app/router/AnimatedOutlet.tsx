@@ -1,0 +1,24 @@
+import { AnimatePresence, motion } from "motion/react";
+import { cloneElement } from "react";
+import { Outlet, useLocation, useOutlet } from "react-router";
+
+export default function AnimatedOutlet() {
+    const location = useLocation();
+    const element = useOutlet();
+    
+    return (
+        <AnimatePresence mode="wait" initial={true}>
+            <motion.div
+                key={location.pathname} // Use location.pathname to animate on route change
+                initial={{ opacity: 0, x: 0, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                exit={{ opacity: 0, x: 0, y: 20 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+                {element && cloneElement(element, { key: location.pathname })}
+            </motion.div>
+            {/* AnimatePresence is used to animate the transition between routes */}
+
+        </AnimatePresence>
+  )
+}
